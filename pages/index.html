@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Missão 8K — Adílio</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="app">
+    <section class="hero">
+      <div class="eyebrow">🎁 Prenda de aniversário • missão até 11 de outubro</div>
+      <h1>MISSÃO 8K — ADÍLIO</h1>
+      <div class="subtitle">
+        Um plano feito para sair do zero e chegar pronto à <strong>EDP 8K</strong>. A lógica é simples:
+        <strong>3 corridas por semana</strong>, maioria dos treinos em esforço controlado, evolução progressiva
+        e um registo interativo para acompanhar o que foi feito.
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="k">Objetivo</div><div class="v">8 km</div></div>
+        <div class="stat"><div class="k">Frequência</div><div class="v">3x/semana</div></div>
+        <div class="stat"><div class="k">Estratégia</div><div class="v">Consistência</div></div>
+        <div class="stat"><div class="k">Meta</div><div class="v">Acabar bem</div></div>
+      </div>
+
+      <div class="hero-top">
+        <div></div>
+        <div class="countdown">
+          <h3>Countdown para a corrida</h3>
+          <p id="raceDateText">11 de outubro • 09:20 • EDP 8K</p>
+          <div class="count-grid">
+            <div class="count-box"><b id="d">--</b><span>Dias</span></div>
+            <div class="count-box"><b id="h">--</b><span>Horas</span></div>
+            <div class="count-box"><b id="m">--</b><span>Min</span></div>
+            <div class="count-box"><b id="s">--</b><span>Seg</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <div class="pills">
+        <div class="pill green">🟢 Treino A = fácil e controlado</div>
+        <div class="pill blue">🔵 Treino B = evolução</div>
+        <div class="pill red">🔴 Longo = resistência e distância</div>
+        <div class="pill">🧠 Regra: se não consegues falar, vais rápido demais</div>
+      </div>
+      <div class="actions">
+        <button id="exportBtn">Exportar JSON</button>
+        <label class="file-btn secondary" for="importFile">Importar JSON</label>
+        <input type="file" id="importFile" accept="application/json" />
+        <button id="copySummaryBtn" class="secondary">Copiar resumo</button>
+        <button id="printBtn" class="secondary">Imprimir</button>
+        <button id="resetBtn" class="warn">Limpar tudo</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <h2>Resumo do progresso</h2>
+        <div class="sub">Tudo fica guardado neste navegador. Também podes exportar os registos para JSON e partilhar com o grupo.</div>
+
+        <div class="summary-grid">
+          <div class="summary-card"><b id="doneCount">0</b><span>Treinos feitos</span></div>
+          <div class="summary-card"><b id="leftCount">36</b><span>Por fazer</span></div>
+          <div class="summary-card"><b id="weekCount">0</b><span>Semanas completas</span></div>
+          <div class="summary-card"><b id="pctCount">0%</b><span>Progresso total</span></div>
+        </div>
+
+        <div class="mobile-summary">
+          <div class="mobile-card"><b id="doneCountM">0</b><span>Treinos feitos</span></div>
+          <div class="mobile-card"><b id="leftCountM">36</b><span>Por fazer</span></div>
+          <div class="mobile-card"><b id="weekCountM">0</b><span>Semanas completas</span></div>
+          <div class="mobile-card"><b id="pctCountM">0%</b><span>Progresso total</span></div>
+        </div>
+
+        <div style="margin-top:16px" class="field">
+          <label for="globalNotes">Notas gerais do Adílio</label>
+          <textarea id="globalNotes" placeholder="Ex.: Hoje a corrida foi mais fácil do que esperava. Gostei mais de correr na rua do que na passadeira."></textarea>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Checklist da semana da prova</h2>
+        <div class="checklist">
+          <label class="row"><input type="checkbox" data-race="race1"><span>Levantar dorsal / kit</span></label>
+          <label class="row"><input type="checkbox" data-race="race2"><span>Separar ténis, meias e roupa</span></label>
+          <label class="row"><input type="checkbox" data-race="race3"><span>Dormir cedo na véspera</span></label>
+          <label class="row"><input type="checkbox" data-race="race4"><span>Pequeno-almoço leve</span></label>
+          <label class="row"><input type="checkbox" data-race="race5"><span>Chegar com antecedência</span></label>
+          <label class="row"><input type="checkbox" data-race="race6"><span>Objetivo do dia: acabar bem e sorrir na meta</span></label>
+        </div>
+
+        <div class="note-box">
+          <strong>Recomendação prática:</strong>
+          a maior parte dos treinos deve parecer fácil. O importante é aparecer, repetir e chegar a outubro sem lesões.
+        </div>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <h2>Plano semanal</h2>
+      <div class="section-badge" id="overallProgressText">0 de 36 treinos concluídos</div>
+    </div>
+
+    <div id="weeks"></div>
+
+    <section class="grid">
+      <div class="panel">
+        <h2>Histórico de registos</h2>
+        <div class="sub">
+          Sempre que um treino for marcado como concluído, podes abrir os detalhes e guardar a data, tempo, distância, sensação e observações.
+        </div>
+        <div id="historyList" class="history-list"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Como partilhar com o grupo</h2>
+        <div class="sub">
+          Nesta versão, os dados ficam no browser. Para o grupo acompanhar o progresso, a forma mais simples é:
+        </div>
+        <ul style="margin:0 0 14px 18px; color:#334155; line-height:1.6;">
+          <li>o Adílio usar sempre este mesmo ficheiro no mesmo browser;</li>
+          <li>exportar o JSON quando quiser atualizar o grupo;</li>
+          <li>copiar o resumo ou enviar o JSON para o grupo guardar.</li>
+        </ul>
+
+        <button id="copyDetailedBtn" class="success" style="width:100%">Copiar atualização detalhada</button>
+
+      </div>
+    </section>
+
+    <div class="footer-note">
+      Versão 2 • mais interativa, com registo por treino, histórico, exportação/importação JSON e layout melhorado para mobile.
+    </div>
+  </div>
+
+  <dialog id="detailDialog">
+    <form method="dialog" class="modal">
+      <div class="modal-head">
+        <div>
+          <h3 id="dialogTitle">Detalhes do treino</h3>
+          <div class="modal-sub" id="dialogSubtitle"></div>
+        </div>
+        <button type="button" id="closeDialogBtn" class="secondary">Fechar</button>
+      </div>
+
+      <div class="meta-grid">
+        <div class="field">
+          <label for="logDate">Data do treino</label>
+          <input type="date" id="logDate">
+        </div>
+        <div class="field">
+          <label for="logFeeling">Sensação</label>
+          <select id="logFeeling">
+            <option value="">Selecionar</option>
+            <option value="Muito fácil">Muito fácil</option>
+            <option value="Fácil">Fácil</option>
+            <option value="Controlado">Controlado</option>
+            <option value="Puxado">Puxado</option>
+            <option value="Muito puxado">Muito puxado</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="logTime">Tempo (min)</label>
+          <input type="number" id="logTime" min="0" step="1" placeholder="Ex.: 32">
+        </div>
+        <div class="field">
+          <label for="logDistance">Distância (km)</label>
+          <input type="number" id="logDistance" min="0" step="0.1" placeholder="Ex.: 4.8">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="logNotes">Observações</label>
+        <textarea id="logNotes" placeholder="Ex.: Fiz o treino na rua. Comecei pesado, mas acabei melhor."></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" id="saveLogBtn">Guardar detalhes</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast">Guardado.</div>
+
+  <script>
+    const STORAGE_KEY = "missao8k_adilio_v2";
+
+    const plan = [
+      { week:1, dates:"30/03 - 05/04", focus:"Criar rotina sem moer as pernas.",
+        sessions:[
+          {id:"w1-a",day:"Terça",type:"A",desc:"8 x (1 min corrida + 2 min caminhada)",meta:"Ritmo muito confortável. Objetivo: acabar fresco."},
+          {id:"w1-b",day:"Quinta",type:"B",desc:"6 x (1 min corrida + 2 min caminhada)",meta:"Mesmo ritmo fácil, só para repetir o gesto."},
+          {id:"w1-l",day:"Domingo",type:"Longo",desc:"30 min caminhada ativa + 6 x 30 s corrida leve",meta:"Construir base sem forçar."}
+        ]},
+      { week:2, dates:"06/04 - 12/04", focus:"Ganhar confiança e repetir sem falhas.",
+        sessions:[
+          {id:"w2-a",day:"Terça",type:"A",desc:"8 x (1 min corrida + 2 min caminhada)",meta:"Conversacional do início ao fim."},
+          {id:"w2-b",day:"Quinta",type:"B",desc:"7 x (1 min corrida + 2 min caminhada)",meta:"Mais uma repetição, sem acelerar."},
+          {id:"w2-l",day:"Domingo",type:"Longo",desc:"35 min caminhada ativa + 8 x 30 s corrida leve",meta:"Mais tempo em movimento."}
+        ]},
+      { week:3, dates:"13/04 - 19/04", focus:"Começar a correr blocos ligeiramente maiores.",
+        sessions:[
+          {id:"w3-a",day:"Terça",type:"A",desc:"6 x (2 min corrida + 2 min caminhada)",meta:"Sem puxar. Respiração controlada."},
+          {id:"w3-b",day:"Quinta",type:"B",desc:"7 x (2 min corrida + 90 s caminhada)",meta:"Mais fluído, ainda fácil."},
+          {id:"w3-l",day:"Domingo",type:"Longo",desc:"35–40 min total com blocos de corrida leve",meta:"Estar confortável mais tempo."}
+        ]},
+      { week:4, dates:"20/04 - 26/04", focus:"Melhorar consistência sem mexer muito na intensidade.",
+        sessions:[
+          {id:"w4-a",day:"Terça",type:"A",desc:"5 x (3 min corrida + 2 min caminhada)",meta:"Muito controlado."},
+          {id:"w4-b",day:"Quinta",type:"B",desc:"4 x (4 min corrida + 2 min caminhada)",meta:"Só um pouco mais exigente."},
+          {id:"w4-l",day:"Domingo",type:"Longo",desc:"40 min total com corrida leve e caminhada",meta:"Acumular tempo, não velocidade."}
+        ]},
+      { week:5, dates:"27/04 - 03/05", focus:"Entrar numa corrida mais contínua.",
+        sessions:[
+          {id:"w5-a",day:"Terça",type:"A",desc:"4 x (5 min corrida + 2 min caminhada)",meta:"Ritmo de conversa."},
+          {id:"w5-b",day:"Quinta",type:"B",desc:"3 x (6 min corrida + 2 min caminhada)",meta:"Continuar relaxado."},
+          {id:"w5-l",day:"Domingo",type:"Longo",desc:"45 min total ou ~4 km em modo confortável",meta:"Primeiro longo a sério."}
+        ]},
+      { week:6, dates:"04/05 - 10/05", focus:"Testar corrida contínua sem entrar em esforço alto.",
+        sessions:[
+          {id:"w6-a",day:"Terça",type:"A",desc:"15 min corrida contínua + 5 min caminhada + 8 min corrida",meta:"Sem pressa."},
+          {id:"w6-b",day:"Quinta",type:"B",desc:"20 min corrida contínua",meta:"Firme, mas sempre confortável."},
+          {id:"w6-l",day:"Domingo",type:"Longo",desc:"4,5 km leves",meta:"Primeiro alvo em distância."}
+        ]},
+      { week:7, dates:"11/05 - 17/05", focus:"Consolidar a corrida contínua.",
+        sessions:[
+          {id:"w7-a",day:"Terça",type:"A",desc:"20 min corrida contínua",meta:"Fácil do início ao fim."},
+          {id:"w7-b",day:"Quinta",type:"B",desc:"22–25 min corrida contínua",meta:"Mais tempo, mesmo controlo."},
+          {id:"w7-l",day:"Domingo",type:"Longo",desc:"5 km leves",meta:"Já a parecer corrida de verdade."}
+        ]},
+      { week:8, dates:"18/05 - 24/05", focus:"Subir a duração sem sair da zona segura.",
+        sessions:[
+          {id:"w8-a",day:"Terça",type:"A",desc:"25 min corrida contínua",meta:"Ritmo estável."},
+          {id:"w8-b",day:"Quinta",type:"B",desc:"6 x (2 min um pouco mais vivo + 2 min fácil)",meta:"Estimular sem esgotar."},
+          {id:"w8-l",day:"Domingo",type:"Longo",desc:"5,5 km leves",meta:"Construir resistência real."}
+        ]},
+      { week:9, dates:"25/05 - 31/05", focus:"Fazer o corpo aceitar mais quilómetros.",
+        sessions:[
+          {id:"w9-a",day:"Terça",type:"A",desc:"28 min corrida contínua",meta:"Sempre falável."},
+          {id:"w9-b",day:"Quinta",type:"B",desc:"3 x (8 min corrida + 2 min fácil)",meta:"Resistência específica."},
+          {id:"w9-l",day:"Domingo",type:"Longo",desc:"6 km leves",meta:"Passo importante."}
+        ]},
+      { week:10, dates:"01/06 - 07/06", focus:"Entrar na zona dos 6+ km com confiança.",
+        sessions:[
+          {id:"w10-a",day:"Terça",type:"A",desc:"30 min corrida contínua",meta:"Muito controlado."},
+          {id:"w10-b",day:"Quinta",type:"B",desc:"20 min fácil + 4 x 1 min mais vivo",meta:"Só acordar as pernas."},
+          {id:"w10-l",day:"Domingo",type:"Longo",desc:"6,5 km leves",meta:"Resistir sem sofrer."}
+        ]},
+      { week:11, dates:"08/06 - 14/06", focus:"Quase lá: mais volume, mesma cabeça.",
+        sessions:[
+          {id:"w11-a",day:"Terça",type:"A",desc:"32 min corrida contínua",meta:"Sem heroísmos."},
+          {id:"w11-b",day:"Quinta",type:"B",desc:"4 x (6 min firme + 2 min fácil)",meta:"Treino de evolução."},
+          {id:"w11-l",day:"Domingo",type:"Longo",desc:"7 km leves",meta:"Primeira grande meta psicológica."}
+        ]},
+      { week:12, dates:"15/06 - 21/06", focus:"Fechar o ciclo e manter a motivação alta.",
+        sessions:[
+          {id:"w12-a",day:"Terça",type:"A",desc:"25 min corrida fácil",meta:"Soltar."},
+          {id:"w12-b",day:"Quinta",type:"B",desc:"20 min fácil + 4 acelerações de 20 s",meta:"Sentir leveza."},
+          {id:"w12-l",day:"Domingo",type:"Longo",desc:"7,5–8 km leves",meta:"Prova geral sem pressão."}
+        ]}
+    ];
+
+    function tagClass(type){ return type === "A" ? "a" : type === "B" ? "b" : "l"; }
+    function tagLabel(type){ return type === "A" ? "🟢 Treino A" : type === "B" ? "🔵 Treino B" : "🔴 Longo"; }
+
+    function todayISO(){
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,"0");
+      const da = String(d.getDate()).padStart(2,"0");
+      return `${y}-${m}-${da}`;
+    }
+
+    function defaultLogs(){
+      const out = {};
+      plan.forEach(w => w.sessions.forEach(s => {
+        out[s.id] = { completed:false, date:"", time:"", distance:"", feeling:"", notes:"" };
+      }));
+      return out;
+    }
+
+    function defaultState(){
+      return {
+        logs: defaultLogs(),
+        notes: "",
+        raceChecklist: { race1:false, race2:false, race3:false, race4:false, race5:false, race6:false },
+        updatedAt: new Date().toISOString()
+      };
+    }
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return defaultState();
+        const parsed = JSON.parse(raw);
+        const base = defaultState();
+        return {
+          ...base,
+          ...parsed,
+          logs: { ...base.logs, ...(parsed.logs || {}) },
+          raceChecklist: { ...base.raceChecklist, ...(parsed.raceChecklist || {}) }
+        };
+      }catch(err){
+        return defaultState();
+      }
+    }
+
+    let state = loadState();
+    let currentSessionId = null;
+
+    function saveState(showToast = true, msg = "Guardado."){
+      state.updatedAt = new Date().toISOString();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderSummary();
+      renderHistory();
+      if(showToast) toast(msg);
+    }
+
+    function toast(message){
+      const el = document.getElementById("toast");
+      el.textContent = message;
+      el.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 1800);
+    }
+
+    function getAllSessions(){
+      return plan.flatMap(w => w.sessions.map(s => ({...s, week:w.week, dates:w.dates})));
+    }
+
+    function renderWeeks(){
+      const host = document.getElementById("weeks");
+      host.innerHTML = "";
+
+      plan.forEach(week => {
+        const done = week.sessions.filter(s => state.logs[s.id]?.completed).length;
+        const pct = Math.round((done / week.sessions.length) * 100);
+
+        const section = document.createElement("section");
+        section.className = "week";
+        section.innerHTML = `
+          <div class="week-head">
+            <div>
+              <div class="week-title">Semana ${week.week}</div>
+              <div class="week-dates">${week.dates}</div>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-text">${done}/3 treinos concluídos</div>
+              <div class="progress"><div style="width:${pct}%"></div></div>
+            </div>
+          </div>
+
+          <div class="sessions">
+            ${week.sessions.map(s => {
+              const log = state.logs[s.id] || {};
+              return `
+                <article class="session">
+                  <div class="tag ${tagClass(s.type)}">${tagLabel(s.type)}</div>
+                  <div class="day">${s.day}</div>
+                  <div class="desc">${s.desc}</div>
+                  <div class="meta">${s.meta}</div>
+
+                  <div class="session-actions">
+                    <label class="done">
+                      <input type="checkbox" data-check="${s.id}" ${log.completed ? "checked" : ""}>
+                      <span>Treino concluído</span>
+                    </label>
+                    <button class="detail-btn" data-detail="${s.id}" type="button">Detalhes</button>
+                  </div>
+                </article>
+              `;
+            }).join("")}
+          </div>
+
+          <div class="focus"><strong>Foco da semana</strong>${week.focus}</div>
+        `;
+        host.appendChild(section);
+      });
+
+      host.querySelectorAll("[data-check]").forEach(el => {
+        el.addEventListener("change", e => {
+          const id = e.target.dataset.check;
+          const existing = state.logs[id] || {};
+          state.logs[id] = {
+            ...existing,
+            completed: e.target.checked,
+            date: e.target.checked && !existing.date ? todayISO() : (existing.date || "")
+          };
+          saveState(false);
+          renderWeeks();
+          toast(e.target.checked ? "Treino marcado como feito." : "Treino desmarcado.");
+        });
+      });
+
+      host.querySelectorAll("[data-detail]").forEach(btn => {
+        btn.addEventListener("click", () => openDetail(btn.dataset.detail));
+      });
+    }
+
+    function renderSummary(){
+      const sessions = getAllSessions();
+      const total = sessions.length;
+      const done = sessions.filter(s => state.logs[s.id]?.completed).length;
+      const left = total - done;
+      const fullWeeks = plan.filter(w => w.sessions.every(s => state.logs[s.id]?.completed)).length;
+      const pct = Math.round((done / total) * 100);
+
+      const pairs = [
+        ["doneCount", done], ["leftCount", left], ["weekCount", fullWeeks], ["pctCount", pct + "%"],
+        ["doneCountM", done], ["leftCountM", left], ["weekCountM", fullWeeks], ["pctCountM", pct + "%"]
+      ];
+      pairs.forEach(([id, value]) => {
+        const el = document.getElementById(id);
+        if(el) el.textContent = value;
+      });
+      document.getElementById("overallProgressText").textContent = `${done} de ${total} treinos concluídos`;
+    }
+
+    function bindStaticPanels(){
+      const globalNotes = document.getElementById("globalNotes");
+      globalNotes.value = state.notes || "";
+      globalNotes.addEventListener("input", () => {
+        state.notes = globalNotes.value;
+        saveState(false);
+      });
+
+      document.querySelectorAll("[data-race]").forEach(el => {
+        const key = el.dataset.race;
+        el.checked = !!state.raceChecklist[key];
+        el.addEventListener("change", () => {
+          state.raceChecklist[key] = el.checked;
+          saveState(false);
+        });
+      });
+    }
+
+    function findSession(id){
+      return getAllSessions().find(s => s.id === id);
+    }
+
+    function openDetail(id){
+      currentSessionId = id;
+      const s = findSession(id);
+      const log = state.logs[id] || {};
+      document.getElementById("dialogTitle").textContent = `${s.day} • ${tagLabel(s.type)}`;
+      document.getElementById("dialogSubtitle").textContent = `${s.desc} • ${s.meta}`;
+      document.getElementById("logDate").value = log.date || "";
+      document.getElementById("logTime").value = log.time || "";
+      document.getElementById("logDistance").value = log.distance || "";
+      document.getElementById("logFeeling").value = log.feeling || "";
+      document.getElementById("logNotes").value = log.notes || "";
+      document.getElementById("detailDialog").showModal();
+    }
+
+    function closeDetail(){
+      document.getElementById("detailDialog").close();
+      currentSessionId = null;
+    }
+
+    function saveDetail(){
+      if(!currentSessionId) return;
+      const existing = state.logs[currentSessionId] || {};
+      state.logs[currentSessionId] = {
+        ...existing,
+        completed: true,
+        date: document.getElementById("logDate").value || existing.date || todayISO(),
+        time: document.getElementById("logTime").value,
+        distance: document.getElementById("logDistance").value,
+        feeling: document.getElementById("logFeeling").value,
+        notes: document.getElementById("logNotes").value.trim()
+      };
+      saveState(false);
+      renderWeeks();
+      closeDetail();
+      toast("Detalhes do treino guardados.");
+    }
+
+    function renderHistory(){
+      const host = document.getElementById("historyList");
+      const sessions = getAllSessions()
+        .map(s => ({...s, log: state.logs[s.id] || {}}))
+        .filter(x => x.log.completed)
+        .sort((a,b) => {
+          const da = a.log.date || "";
+          const db = b.log.date || "";
+          return db.localeCompare(da);
+        });
+
+      if(!sessions.length){
+        host.innerHTML = `<div class="history-item">
+          <strong>Ainda não há treinos registados.</strong>
+          <div style="color:var(--muted); margin-top:6px;">Quando o Adílio concluir um treino, ele aparece aqui com os detalhes.</div>
+        </div>`;
+        return;
+      }
+
+      host.innerHTML = sessions.map(item => {
+        const parts = [];
+        if(item.log.time) parts.push(`⏱ ${item.log.time} min`);
+        if(item.log.distance) parts.push(`📏 ${item.log.distance} km`);
+        if(item.log.feeling) parts.push(`💬 ${item.log.feeling}`);
+        return `
+          <div class="history-item">
+            <div class="history-top">
+              <div>
+                <strong>${item.day} • ${tagLabel(item.type)}</strong>
+                <span>Semana ${item.week} • ${item.dates}${item.log.date ? ` • ${formatDate(item.log.date)}` : ""}</span>
+              </div>
+            </div>
+
+            <div class="history-badges">
+              ${parts.map(p => `<div class="mini-badge">${p}</div>`).join("") || `<div class="mini-badge">✅ concluído</div>`}
+            </div>
+
+            ${item.log.notes ? `<div class="history-note">${escapeHtml(item.log.notes)}</div>` : ""}
+            <div class="history-actions">
+              <button class="secondary" type="button" onclick="openDetail('${item.id}')">Editar</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function formatDate(value){
+      if(!value) return "";
+      const [y,m,d] = value.split("-");
+      return `${d}/${m}/${y}`;
+    }
+
+    function exportJSON(){
+      const payload = {
+        app: "Missão 8K — Adílio",
+        version: 2,
+        exportedAt: new Date().toISOString(),
+        state
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `missao_8k_adilio_v2_${todayISO()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      toast("JSON exportado.");
+    }
+
+    function importJSON(file){
+      const reader = new FileReader();
+      reader.onload = () => {
+        try{
+          const parsed = JSON.parse(reader.result);
+          const incoming = parsed.state ? parsed.state : parsed;
+          const base = defaultState();
+          state = {
+            ...base,
+            ...incoming,
+            logs: { ...base.logs, ...(incoming.logs || {}) },
+            raceChecklist: { ...base.raceChecklist, ...(incoming.raceChecklist || {}) }
+          };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          bindStaticPanels();
+          renderWeeks();
+          renderSummary();
+          renderHistory();
+          toast("Registos importados com sucesso.");
+        }catch(err){
+          alert("Não foi possível importar este JSON.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function copySummary(simple = true){
+      const sessions = getAllSessions();
+      const total = sessions.length;
+      const done = sessions.filter(s => state.logs[s.id]?.completed).length;
+      const fullWeeks = plan.filter(w => w.sessions.every(s => state.logs[s.id]?.completed)).length;
+      const pct = Math.round((done / total) * 100);
+      const lastUpdate = state.updatedAt ? new Date(state.updatedAt).toLocaleString("pt-PT") : "sem registo";
+
+      let text = `Missão 8K — Adílio
+Progresso: ${done}/${total} treinos (${pct}%)
+Semanas completas: ${fullWeeks}/${plan.length}
+Última atualização: ${lastUpdate}`;
+
+      if(!simple){
+        const recent = sessions
+          .map(s => ({...s, log: state.logs[s.id] || {}}))
+          .filter(x => x.log.completed)
+          .sort((a,b) => (b.log.date || "").localeCompare(a.log.date || ""))
+          .slice(0,3);
+
+        if(recent.length){
+          text += `
+
+Últimos treinos:`;
+          recent.forEach(r => {
+            const bits = [];
+            if(r.log.date) bits.push(formatDate(r.log.date));
+            if(r.log.time) bits.push(`${r.log.time} min`);
+            if(r.log.distance) bits.push(`${r.log.distance} km`);
+            if(r.log.feeling) bits.push(r.log.feeling);
+            text += `\n- ${r.day} (${r.type})${bits.length ? " • " + bits.join(" • ") : ""}`;
+          });
+        }
+
+        text += `
+
+Notas gerais: ${state.notes ? state.notes.trim() : "sem notas"}`;
+      }
+
+      navigator.clipboard.writeText(text).then(() => {
+        toast(simple ? "Resumo copiado." : "Atualização detalhada copiada.");
+      });
+    }
+
+    function resetAll(){
+      if(!confirm("Tens a certeza que queres limpar todos os registos?")) return;
+      state = defaultState();
+      localStorage.removeItem(STORAGE_KEY);
+      bindStaticPanels();
+      renderWeeks();
+      renderSummary();
+      renderHistory();
+      toast("Registos limpos.");
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function updateCountdown(){
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      let race = new Date(`${currentYear}-10-11T09:20:00`);
+      if(now > race) race = new Date(`${currentYear + 1}-10-11T09:20:00`);
+      document.getElementById("raceDateText").textContent = `11 de outubro de ${race.getFullYear()} • 09:20 • EDP 8K`;
+
+      const diff = Math.max(0, Math.floor((race - now) / 1000));
+      const days = Math.floor(diff / 86400);
+      const hours = Math.floor((diff % 86400) / 3600);
+      const mins = Math.floor((diff % 3600) / 60);
+      const secs = diff % 60;
+
+      document.getElementById("d").textContent = days;
+      document.getElementById("h").textContent = String(hours).padStart(2,"0");
+      document.getElementById("m").textContent = String(mins).padStart(2,"0");
+      document.getElementById("s").textContent = String(secs).padStart(2,"0");
+    }
+
+    document.getElementById("exportBtn").addEventListener("click", exportJSON);
+    document.getElementById("importFile").addEventListener("change", e => {
+      if(e.target.files?.[0]) importJSON(e.target.files[0]);
+      e.target.value = "";
+    });
+    document.getElementById("copySummaryBtn").addEventListener("click", () => copySummary(true));
+    document.getElementById("copyDetailedBtn").addEventListener("click", () => copySummary(false));
+    document.getElementById("printBtn").addEventListener("click", () => window.print());
+    document.getElementById("resetBtn").addEventListener("click", resetAll);
+    document.getElementById("saveLogBtn").addEventListener("click", saveDetail);
+    document.getElementById("closeDialogBtn").addEventListener("click", closeDetail);
+
+    bindStaticPanels();
+    renderWeeks();
+    renderSummary();
+    renderHistory();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    window.openDetail = openDetail;
+  </script>
+</body>
+</html>

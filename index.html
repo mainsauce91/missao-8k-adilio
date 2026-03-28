@@ -1,1 +1,1405 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Missão 8K — Adílio</title>
+  <style>
+    :root{
+      --bg:#eef2f7;
+      --bg-2:#f7f9fc;
+      --card:#ffffff;
+      --text:#12284c;
+      --muted:#5f6f89;
+      --line:#dbe4f0;
+      --accent:#ff6a3d;
+      --accent-2:#ff8a66;
+      --accent-soft:#fff1eb;
+      --green:#159a68;
+      --green-soft:#eaf8f2;
+      --green-line:#ccebdd;
+      --blue:#2f6fed;
+      --blue-soft:#edf3ff;
+      --blue-line:#d7e4ff;
+      --red:#d84e4e;
+      --red-soft:#fff1f1;
+      --red-line:#ffd7d7;
+      --gold:#e9a800;
+      --shadow:0 18px 45px rgba(18,40,76,.08);
+      --shadow-soft:0 10px 24px rgba(18,40,76,.06);
+      --radius-xl:30px;
+      --radius-lg:22px;
+      --radius-md:18px;
+      --radius-sm:14px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:
+    	radial-gradient(circle at top right, rgba(255,106,61,.10), rgba(255,106,61,0) 22%),
+    	linear-gradient(180deg, #f4f7fb 0%, #edf2f7 100%);
+      min-height:100vh;
+    }
+    
+    .app{
+      max-width:1320px;
+      margin:0 auto;
+      padding:20px;
+    }
+    
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.9);
+      background:linear-gradient(135deg, #ffffff 0%, #f7f9fc 56%, #fff5ef 100%);
+      border-radius:34px;
+      box-shadow:var(--shadow);
+      padding:26px;
+    }
+    .hero:before{
+      content:"";
+      position:absolute;
+      width:280px;height:280px;
+      right:-90px;top:-100px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,106,61,.17) 0%, rgba(255,106,61,0) 72%);
+      pointer-events:none;
+    }
+    
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-weight:900;
+      font-size:12px;
+      margin-bottom:10px;
+    }
+    
+    h1{
+      margin:0;
+      font-size:clamp(34px,6vw,52px);
+      line-height:1.02;
+      letter-spacing:-.03em;
+    }
+    .subtitle{
+      margin-top:10px;
+      max-width:820px;
+      font-size:17px;
+      line-height:1.55;
+      color:#334155;
+    }
+    
+    .hero-top{
+      display:grid;
+      grid-template-columns:1.25fr .95fr;
+      gap:18px;
+      align-items:start;
+      margin-top:18px;
+    }
+    
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+      margin-top:20px;
+    }
+    .stat{
+      background:rgba(255,255,255,.78);
+      backdrop-filter: blur(10px);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:16px;
+      box-shadow:var(--shadow-soft);
+    }
+    .stat .k{
+      color:var(--muted);
+      font-size:12px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+    .stat .v{
+      margin-top:7px;
+      font-size:26px;
+      font-weight:900;
+      letter-spacing:-.02em;
+    }
+    
+    .countdown{
+      background:linear-gradient(180deg,#102347 0%, #162f5d 100%);
+      color:#fff;
+      border-radius:26px;
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+    .countdown h3{margin:0 0 8px 0;font-size:20px}
+    .countdown p{margin:0;color:#dbe7ff;line-height:1.45}
+    .count-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:10px;
+      margin-top:16px;
+    }
+    .count-box{
+      text-align:center;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:18px;
+      padding:13px 8px;
+    }
+    .count-box b{
+      display:block;
+      font-size:26px;
+      line-height:1;
+    }
+    .count-box span{
+      display:block;
+      margin-top:6px;
+      font-size:11px;
+      color:#dbe7ff;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-weight:800;
+    }
+    
+    .toolbar{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:14px;
+      padding:16px 18px;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow-soft);
+    }
+    .pills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 13px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#f8fafc;
+      font-size:14px;
+      font-weight:800;
+      color:#243753;
+    }
+    .pill.green{background:var(--green-soft);border-color:var(--green-line)}
+    .pill.blue{background:var(--blue-soft);border-color:var(--blue-line)}
+    .pill.red{background:var(--red-soft);border-color:var(--red-line)}
+    
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      gap:10px;
+      align-items:flex-start;
+    }
+    button,.file-btn{
+      border:0;
+      border-radius:14px;
+      padding:12px 15px;
+      background:#102347;
+      color:#fff;
+      font:inherit;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 10px 24px rgba(16,35,71,.12);
+      min-height:44px;
+    }
+    button.secondary,.file-btn.secondary{
+      background:#fff;
+      color:var(--text);
+      border:1px solid var(--line);
+      box-shadow:none;
+    }
+    button.warn{background:#ad2d22}
+    button.success{background:#16a34a}
+    input[type=file]{display:none}
+    
+    .grid{
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:18px;
+      margin-top:18px;
+    }
+    
+    .panel{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:26px;
+      box-shadow:var(--shadow-soft);
+      padding:20px;
+    }
+    .panel h2,.panel h3{
+      margin:0 0 12px 0;
+      letter-spacing:-.02em;
+    }
+    .panel h2{font-size:28px}
+    .panel h3{font-size:22px}
+    .sub{
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.5;
+      margin-bottom:14px;
+    }
+    
+    .summary-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+      margin-top:8px;
+    }
+    .summary-card{
+      background:#f8fafc;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+    }
+    .summary-card b{
+      display:block;
+      font-size:28px;
+      line-height:1;
+    }
+    .summary-card span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:700;
+      margin-top:8px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+    
+    .section-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin:26px 2px 14px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size:30px;
+      letter-spacing:-.02em;
+    }
+    .section-badge{
+      background:#eaf0f8;
+      border:1px solid #dce6f3;
+      color:#31445f;
+      border-radius:999px;
+      padding:10px 14px;
+      font-weight:800;
+      font-size:14px;
+      white-space:nowrap;
+    }
+    
+    .week{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:28px;
+      box-shadow:var(--shadow-soft);
+      padding:18px;
+      margin-bottom:16px;
+    }
+    .week-head{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:14px;
+      align-items:start;
+      padding:4px 4px 16px;
+      border-bottom:1px solid var(--line);
+    }
+    .week-title{
+      color:var(--accent);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      font-size:13px;
+      font-weight:900;
+    }
+    .week-dates{
+      margin-top:4px;
+      font-size:21px;
+      font-weight:900;
+      letter-spacing:-.02em;
+    }
+    .progress-wrap{min-width:180px}
+    .progress-text{
+      text-align:right;
+      font-size:13px;
+      font-weight:800;
+      color:var(--muted);
+      margin-bottom:7px;
+    }
+    .progress{
+      height:12px;
+      border-radius:999px;
+      overflow:hidden;
+      background:#eef3f8;
+      border:1px solid var(--line);
+    }
+    .progress > div{
+      height:100%;
+      width:0;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      transition:width .2s ease;
+    }
+    
+    .sessions{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+      margin-top:16px;
+    }
+    .session{
+      background:#fbfdff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:16px;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:13px;
+      font-weight:900;
+      border:1px solid var(--line);
+      margin-bottom:12px;
+    }
+    .tag.a{background:var(--green-soft);border-color:var(--green-line)}
+    .tag.b{background:var(--blue-soft);border-color:var(--blue-line)}
+    .tag.l{background:var(--red-soft);border-color:var(--red-line)}
+    .day{
+      font-size:24px;
+      line-height:1.1;
+      font-weight:950;
+      letter-spacing:-.02em;
+    }
+    .desc{
+      margin-top:8px;
+      font-size:18px;
+      line-height:1.35;
+      min-height:73px;
+    }
+    .meta{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.45;
+      min-height:44px;
+      margin-top:8px;
+    }
+    
+    .session-actions{
+      margin-top:14px;
+      padding-top:12px;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .done{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:800;
+      color:#22324c;
+      min-height:44px;
+    }
+    .done input{
+      width:22px;height:22px;
+      accent-color:var(--accent);
+      flex:0 0 auto;
+    }
+    .detail-btn{
+      background:#fff;
+      color:var(--text);
+      border:1px solid var(--line);
+      box-shadow:none;
+      padding:10px 12px;
+      min-height:40px;
+    }
+    
+    .focus{
+      margin-top:14px;
+      background:var(--accent-soft);
+      border:1px solid #ffd8cb;
+      border-radius:18px;
+      padding:14px 15px;
+      font-size:15px;
+      line-height:1.5;
+    }
+    .focus strong{display:block;margin-bottom:4px}
+    
+    .meta-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom:12px;
+    }
+    .field label{
+      font-size:13px;
+      font-weight:900;
+      color:#32445f;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+    }
+    input[type=text],input[type=number],input[type=date],select,textarea{
+      width:100%;
+      border:1px solid var(--line);
+      background:#fbfdff;
+      color:var(--text);
+      border-radius:14px;
+      padding:12px 13px;
+      font:inherit;
+      min-height:46px;
+    }
+    textarea{
+      min-height:100px;
+      resize:vertical;
+    }
+    
+    .history-list{
+      display:grid;
+      gap:12px;
+      margin-top:14px;
+      max-height:560px;
+      overflow:auto;
+      padding-right:4px;
+    }
+    .history-item{
+      border:1px solid var(--line);
+      background:#fbfdff;
+      border-radius:18px;
+      padding:14px;
+    }
+    .history-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:10px;
+    }
+    .history-top strong{
+      display:block;
+      font-size:17px;
+      line-height:1.2;
+    }
+    .history-top span{
+      display:block;
+      color:var(--muted);
+      font-size:13px;
+      margin-top:5px;
+    }
+    .history-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:8px;
+    }
+    .mini-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      background:#f3f7fb;
+      border:1px solid var(--line);
+      color:#304661;
+    }
+    .history-note{
+      color:#334155;
+      font-size:14px;
+      line-height:1.5;
+      margin-top:4px;
+      white-space:pre-wrap;
+    }
+    .history-actions{
+      margin-top:10px;
+      display:flex;
+      justify-content:flex-end;
+      gap:8px;
+    }
+    
+    .checklist .row{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:10px 0;
+      border-bottom:1px dashed #e6edf5;
+    }
+    .checklist .row:last-child{border-bottom:none}
+    .checklist input{
+      width:22px;height:22px;accent-color:var(--accent);margin-top:2px;flex:0 0 auto
+    }
+    
+    .note-box{
+      margin-top:12px;
+      background:#fff9ea;
+      border:1px solid #ffe4a8;
+      border-radius:18px;
+      padding:14px 15px;
+      color:#3f3a20;
+      line-height:1.5;
+    }
+    
+    .footer-note{
+      text-align:center;
+      color:#6b7a92;
+      font-size:13px;
+      margin:20px 0 6px;
+    }
+    
+    .toast{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      background:#102347;
+      color:#fff;
+      padding:14px 16px;
+      border-radius:14px;
+      box-shadow:var(--shadow);
+      opacity:0;
+      transform:translateY(8px);
+      pointer-events:none;
+      transition:.22s ease;
+      z-index:50;
+      max-width:calc(100vw - 32px);
+    }
+    .toast.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+    
+    dialog{
+      width:min(720px, calc(100vw - 24px));
+      border:0;
+      border-radius:26px;
+      padding:0;
+      box-shadow:0 28px 80px rgba(16,35,71,.22);
+    }
+    dialog::backdrop{background:rgba(12,23,43,.45)}
+    .modal{
+      background:#fff;
+      padding:22px;
+    }
+    .modal-head{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+      margin-bottom:14px;
+    }
+    .modal-head h3{
+      margin:0;
+      font-size:28px;
+    }
+    .modal-sub{
+      color:var(--muted);
+      line-height:1.5;
+      margin-top:6px;
+    }
+    .modal-actions{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      margin-top:8px;
+      flex-wrap:wrap;
+    }
+    
+    .mobile-summary{
+      display:none;
+      margin-top:12px;
+      gap:10px;
+      overflow:auto;
+      padding-bottom:4px;
+      scrollbar-width:none;
+    }
+    .mobile-summary::-webkit-scrollbar{display:none}
+    .mobile-card{
+      min-width:155px;
+      background:#f8fafc;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+    }
+    .mobile-card b{
+      display:block;
+      font-size:26px;
+    }
+    .mobile-card span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      margin-top:8px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.07em;
+    }
+    
+    @media (max-width: 1100px){
+      .hero-top,.grid{grid-template-columns:1fr}
+      .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .sessions{grid-template-columns:1fr 1fr}
+      .toolbar{grid-template-columns:1fr}
+      .actions{justify-content:flex-start}
+    }
+    
+    @media (max-width: 780px){
+      .app{padding:12px}
+      .hero{border-radius:24px;padding:18px}
+      .panel,.week{padding:16px;border-radius:22px}
+      .stats{grid-template-columns:1fr 1fr}
+      .count-grid{grid-template-columns:repeat(4,1fr)}
+      .section-head{align-items:flex-start;flex-direction:column}
+      .section-badge{white-space:normal}
+      .week-head{grid-template-columns:1fr}
+      .progress-wrap{min-width:0}
+      .progress-text{text-align:left}
+      .sessions{grid-template-columns:1fr}
+      .desc,.meta{min-height:unset}
+      .summary-grid{display:none}
+      .mobile-summary{display:flex}
+      .meta-grid{grid-template-columns:1fr}
+      .countdown{padding:16px}
+      .actions{
+    	display:grid;
+    	grid-template-columns:1fr 1fr;
+      }
+      .actions button,.actions .file-btn{width:100%;justify-content:center;text-align:center}
+      .pills{gap:8px}
+      .pill{font-size:13px;padding:9px 12px}
+      .history-top{flex-direction:column}
+      .history-actions{justify-content:stretch}
+      .history-actions button{width:100%}
+      .modal{padding:18px}
+      .modal-head h3{font-size:24px}
+    }
+    
+    @media (max-width: 480px){
+      .stats{grid-template-columns:1fr}
+      .count-grid{grid-template-columns:1fr 1fr}
+      .actions{grid-template-columns:1fr}
+      .hero h1{max-width:270px}
+      .count-box b{font-size:24px}
+      .day{font-size:22px}
+      .desc{font-size:17px}
+      .section-head h2,.panel h2{font-size:26px}
+    }
+    
+    @media print{
+      body{background:#fff}
+      .app{max-width:none;padding:0}
+      .toolbar, .footer-note, .toast, .detail-btn, dialog, .history-actions, .mobile-summary {display:none !important}
+      .hero, .panel, .week{box-shadow:none}
+      .grid{grid-template-columns:1fr}
+      .summary-grid{display:grid !important}
+      .sessions{grid-template-columns:1fr 1fr 1fr}
+    }
 
+  </style>
+</head>
+<body>
+  <div class="app">
+    <section class="hero">
+      <div class="eyebrow">🎁 Prenda de aniversário • missão até 11 de outubro</div>
+      <h1>MISSÃO 8K — ADÍLIO</h1>
+      <div class="subtitle">
+        Um plano feito para sair do zero e chegar pronto à <strong>EDP 8K</strong>. A lógica é simples:
+        <strong>3 corridas por semana</strong>, maioria dos treinos em esforço controlado, evolução progressiva
+        e um registo interativo para acompanhar o que foi feito.
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="k">Objetivo</div><div class="v">8 km</div></div>
+        <div class="stat"><div class="k">Frequência</div><div class="v">3x/semana</div></div>
+        <div class="stat"><div class="k">Estratégia</div><div class="v">Consistência</div></div>
+        <div class="stat"><div class="k">Meta</div><div class="v">Acabar bem</div></div>
+      </div>
+
+      <div class="hero-top">
+        <div></div>
+        <div class="countdown">
+          <h3>Countdown para a corrida</h3>
+          <p id="raceDateText">11 de outubro • 09:20 • EDP 8K</p>
+          <div class="count-grid">
+            <div class="count-box"><b id="d">--</b><span>Dias</span></div>
+            <div class="count-box"><b id="h">--</b><span>Horas</span></div>
+            <div class="count-box"><b id="m">--</b><span>Min</span></div>
+            <div class="count-box"><b id="s">--</b><span>Seg</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <div class="pills">
+        <div class="pill green">🟢 Treino A = fácil e controlado</div>
+        <div class="pill blue">🔵 Treino B = evolução</div>
+        <div class="pill red">🔴 Longo = resistência e distância</div>
+        <div class="pill">🧠 Regra: se não consegues falar, vais rápido demais</div>
+      </div>
+      <div class="actions">
+        <button id="exportBtn">Exportar JSON</button>
+        <label class="file-btn secondary" for="importFile">Importar JSON</label>
+        <input type="file" id="importFile" accept="application/json" />
+        <button id="copySummaryBtn" class="secondary">Copiar resumo</button>
+        <button id="printBtn" class="secondary">Imprimir</button>
+        <button id="resetBtn" class="warn">Limpar tudo</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <h2>Resumo do progresso</h2>
+        <div class="sub">Tudo fica guardado neste navegador. Também podes exportar os registos para JSON e partilhar com o grupo.</div>
+
+        <div class="summary-grid">
+          <div class="summary-card"><b id="doneCount">0</b><span>Treinos feitos</span></div>
+          <div class="summary-card"><b id="leftCount">36</b><span>Por fazer</span></div>
+          <div class="summary-card"><b id="weekCount">0</b><span>Semanas completas</span></div>
+          <div class="summary-card"><b id="pctCount">0%</b><span>Progresso total</span></div>
+        </div>
+
+        <div class="mobile-summary">
+          <div class="mobile-card"><b id="doneCountM">0</b><span>Treinos feitos</span></div>
+          <div class="mobile-card"><b id="leftCountM">36</b><span>Por fazer</span></div>
+          <div class="mobile-card"><b id="weekCountM">0</b><span>Semanas completas</span></div>
+          <div class="mobile-card"><b id="pctCountM">0%</b><span>Progresso total</span></div>
+        </div>
+
+        <div style="margin-top:16px" class="field">
+          <label for="globalNotes">Notas gerais do Adílio</label>
+          <textarea id="globalNotes" placeholder="Ex.: Hoje a corrida foi mais fácil do que esperava. Gostei mais de correr na rua do que na passadeira."></textarea>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Checklist da semana da prova</h2>
+        <div class="checklist">
+          <label class="row"><input type="checkbox" data-race="race1"><span>Levantar dorsal / kit</span></label>
+          <label class="row"><input type="checkbox" data-race="race2"><span>Separar ténis, meias e roupa</span></label>
+          <label class="row"><input type="checkbox" data-race="race3"><span>Dormir cedo na véspera</span></label>
+          <label class="row"><input type="checkbox" data-race="race4"><span>Pequeno-almoço leve</span></label>
+          <label class="row"><input type="checkbox" data-race="race5"><span>Chegar com antecedência</span></label>
+          <label class="row"><input type="checkbox" data-race="race6"><span>Objetivo do dia: acabar bem e sorrir na meta</span></label>
+        </div>
+
+        <div class="note-box">
+          <strong>Recomendação prática:</strong>
+          a maior parte dos treinos deve parecer fácil. O importante é aparecer, repetir e chegar a outubro sem lesões.
+        </div>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <h2>Plano semanal</h2>
+      <div class="section-badge" id="overallProgressText">0 de 36 treinos concluídos</div>
+    </div>
+
+    <div id="weeks"></div>
+
+    <section class="grid">
+      <div class="panel">
+        <h2>Histórico de registos</h2>
+        <div class="sub">
+          Sempre que um treino for marcado como concluído, podes abrir os detalhes e guardar a data, tempo, distância, sensação e observações.
+        </div>
+        <div id="historyList" class="history-list"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Como partilhar com o grupo</h2>
+        <div class="sub">
+          Nesta versão, os dados ficam no browser. Para o grupo acompanhar o progresso, a forma mais simples é:
+        </div>
+        <ul style="margin:0 0 14px 18px; color:#334155; line-height:1.6;">
+          <li>o Adílio usar sempre este mesmo ficheiro no mesmo browser;</li>
+          <li>exportar o JSON quando quiser atualizar o grupo;</li>
+          <li>copiar o resumo ou enviar o JSON para o grupo guardar.</li>
+        </ul>
+
+        <button id="copyDetailedBtn" class="success" style="width:100%">Copiar atualização detalhada</button>
+
+      </div>
+    </section>
+
+    <div class="footer-note">
+      Versão 2 • mais interativa, com registo por treino, histórico, exportação/importação JSON e layout melhorado para mobile.
+    </div>
+  </div>
+
+  <dialog id="detailDialog">
+    <form method="dialog" class="modal">
+      <div class="modal-head">
+        <div>
+          <h3 id="dialogTitle">Detalhes do treino</h3>
+          <div class="modal-sub" id="dialogSubtitle"></div>
+        </div>
+        <button type="button" id="closeDialogBtn" class="secondary">Fechar</button>
+      </div>
+
+      <div class="meta-grid">
+        <div class="field">
+          <label for="logDate">Data do treino</label>
+          <input type="date" id="logDate">
+        </div>
+        <div class="field">
+          <label for="logFeeling">Sensação</label>
+          <select id="logFeeling">
+            <option value="">Selecionar</option>
+            <option value="Muito fácil">Muito fácil</option>
+            <option value="Fácil">Fácil</option>
+            <option value="Controlado">Controlado</option>
+            <option value="Puxado">Puxado</option>
+            <option value="Muito puxado">Muito puxado</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="logTime">Tempo (min)</label>
+          <input type="number" id="logTime" min="0" step="1" placeholder="Ex.: 32">
+        </div>
+        <div class="field">
+          <label for="logDistance">Distância (km)</label>
+          <input type="number" id="logDistance" min="0" step="0.1" placeholder="Ex.: 4.8">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="logNotes">Observações</label>
+        <textarea id="logNotes" placeholder="Ex.: Fiz o treino na rua. Comecei pesado, mas acabei melhor."></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" id="saveLogBtn">Guardar detalhes</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast">Guardado.</div>
+
+  <script>
+    const STORAGE_KEY = "missao8k_adilio_v2";
+
+    const plan = [
+      { week:1, dates:"30/03 - 05/04", focus:"Criar rotina sem moer as pernas.",
+        sessions:[
+          {id:"w1-a",day:"Terça",type:"A",desc:"8 x (1 min corrida + 2 min caminhada)",meta:"Ritmo muito confortável. Objetivo: acabar fresco."},
+          {id:"w1-b",day:"Quinta",type:"B",desc:"6 x (1 min corrida + 2 min caminhada)",meta:"Mesmo ritmo fácil, só para repetir o gesto."},
+          {id:"w1-l",day:"Domingo",type:"Longo",desc:"30 min caminhada ativa + 6 x 30 s corrida leve",meta:"Construir base sem forçar."}
+        ]},
+      { week:2, dates:"06/04 - 12/04", focus:"Ganhar confiança e repetir sem falhas.",
+        sessions:[
+          {id:"w2-a",day:"Terça",type:"A",desc:"8 x (1 min corrida + 2 min caminhada)",meta:"Conversacional do início ao fim."},
+          {id:"w2-b",day:"Quinta",type:"B",desc:"7 x (1 min corrida + 2 min caminhada)",meta:"Mais uma repetição, sem acelerar."},
+          {id:"w2-l",day:"Domingo",type:"Longo",desc:"35 min caminhada ativa + 8 x 30 s corrida leve",meta:"Mais tempo em movimento."}
+        ]},
+      { week:3, dates:"13/04 - 19/04", focus:"Começar a correr blocos ligeiramente maiores.",
+        sessions:[
+          {id:"w3-a",day:"Terça",type:"A",desc:"6 x (2 min corrida + 2 min caminhada)",meta:"Sem puxar. Respiração controlada."},
+          {id:"w3-b",day:"Quinta",type:"B",desc:"7 x (2 min corrida + 90 s caminhada)",meta:"Mais fluído, ainda fácil."},
+          {id:"w3-l",day:"Domingo",type:"Longo",desc:"35–40 min total com blocos de corrida leve",meta:"Estar confortável mais tempo."}
+        ]},
+      { week:4, dates:"20/04 - 26/04", focus:"Melhorar consistência sem mexer muito na intensidade.",
+        sessions:[
+          {id:"w4-a",day:"Terça",type:"A",desc:"5 x (3 min corrida + 2 min caminhada)",meta:"Muito controlado."},
+          {id:"w4-b",day:"Quinta",type:"B",desc:"4 x (4 min corrida + 2 min caminhada)",meta:"Só um pouco mais exigente."},
+          {id:"w4-l",day:"Domingo",type:"Longo",desc:"40 min total com corrida leve e caminhada",meta:"Acumular tempo, não velocidade."}
+        ]},
+      { week:5, dates:"27/04 - 03/05", focus:"Entrar numa corrida mais contínua.",
+        sessions:[
+          {id:"w5-a",day:"Terça",type:"A",desc:"4 x (5 min corrida + 2 min caminhada)",meta:"Ritmo de conversa."},
+          {id:"w5-b",day:"Quinta",type:"B",desc:"3 x (6 min corrida + 2 min caminhada)",meta:"Continuar relaxado."},
+          {id:"w5-l",day:"Domingo",type:"Longo",desc:"45 min total ou ~4 km em modo confortável",meta:"Primeiro longo a sério."}
+        ]},
+      { week:6, dates:"04/05 - 10/05", focus:"Testar corrida contínua sem entrar em esforço alto.",
+        sessions:[
+          {id:"w6-a",day:"Terça",type:"A",desc:"15 min corrida contínua + 5 min caminhada + 8 min corrida",meta:"Sem pressa."},
+          {id:"w6-b",day:"Quinta",type:"B",desc:"20 min corrida contínua",meta:"Firme, mas sempre confortável."},
+          {id:"w6-l",day:"Domingo",type:"Longo",desc:"4,5 km leves",meta:"Primeiro alvo em distância."}
+        ]},
+      { week:7, dates:"11/05 - 17/05", focus:"Consolidar a corrida contínua.",
+        sessions:[
+          {id:"w7-a",day:"Terça",type:"A",desc:"20 min corrida contínua",meta:"Fácil do início ao fim."},
+          {id:"w7-b",day:"Quinta",type:"B",desc:"22–25 min corrida contínua",meta:"Mais tempo, mesmo controlo."},
+          {id:"w7-l",day:"Domingo",type:"Longo",desc:"5 km leves",meta:"Já a parecer corrida de verdade."}
+        ]},
+      { week:8, dates:"18/05 - 24/05", focus:"Subir a duração sem sair da zona segura.",
+        sessions:[
+          {id:"w8-a",day:"Terça",type:"A",desc:"25 min corrida contínua",meta:"Ritmo estável."},
+          {id:"w8-b",day:"Quinta",type:"B",desc:"6 x (2 min um pouco mais vivo + 2 min fácil)",meta:"Estimular sem esgotar."},
+          {id:"w8-l",day:"Domingo",type:"Longo",desc:"5,5 km leves",meta:"Construir resistência real."}
+        ]},
+      { week:9, dates:"25/05 - 31/05", focus:"Fazer o corpo aceitar mais quilómetros.",
+        sessions:[
+          {id:"w9-a",day:"Terça",type:"A",desc:"28 min corrida contínua",meta:"Sempre falável."},
+          {id:"w9-b",day:"Quinta",type:"B",desc:"3 x (8 min corrida + 2 min fácil)",meta:"Resistência específica."},
+          {id:"w9-l",day:"Domingo",type:"Longo",desc:"6 km leves",meta:"Passo importante."}
+        ]},
+      { week:10, dates:"01/06 - 07/06", focus:"Entrar na zona dos 6+ km com confiança.",
+        sessions:[
+          {id:"w10-a",day:"Terça",type:"A",desc:"30 min corrida contínua",meta:"Muito controlado."},
+          {id:"w10-b",day:"Quinta",type:"B",desc:"20 min fácil + 4 x 1 min mais vivo",meta:"Só acordar as pernas."},
+          {id:"w10-l",day:"Domingo",type:"Longo",desc:"6,5 km leves",meta:"Resistir sem sofrer."}
+        ]},
+      { week:11, dates:"08/06 - 14/06", focus:"Quase lá: mais volume, mesma cabeça.",
+        sessions:[
+          {id:"w11-a",day:"Terça",type:"A",desc:"32 min corrida contínua",meta:"Sem heroísmos."},
+          {id:"w11-b",day:"Quinta",type:"B",desc:"4 x (6 min firme + 2 min fácil)",meta:"Treino de evolução."},
+          {id:"w11-l",day:"Domingo",type:"Longo",desc:"7 km leves",meta:"Primeira grande meta psicológica."}
+        ]},
+      { week:12, dates:"15/06 - 21/06", focus:"Fechar o ciclo e manter a motivação alta.",
+        sessions:[
+          {id:"w12-a",day:"Terça",type:"A",desc:"25 min corrida fácil",meta:"Soltar."},
+          {id:"w12-b",day:"Quinta",type:"B",desc:"20 min fácil + 4 acelerações de 20 s",meta:"Sentir leveza."},
+          {id:"w12-l",day:"Domingo",type:"Longo",desc:"7,5–8 km leves",meta:"Prova geral sem pressão."}
+        ]}
+    ];
+
+    function tagClass(type){ return type === "A" ? "a" : type === "B" ? "b" : "l"; }
+    function tagLabel(type){ return type === "A" ? "🟢 Treino A" : type === "B" ? "🔵 Treino B" : "🔴 Longo"; }
+
+    function todayISO(){
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,"0");
+      const da = String(d.getDate()).padStart(2,"0");
+      return `${y}-${m}-${da}`;
+    }
+
+    function defaultLogs(){
+      const out = {};
+      plan.forEach(w => w.sessions.forEach(s => {
+        out[s.id] = { completed:false, date:"", time:"", distance:"", feeling:"", notes:"" };
+      }));
+      return out;
+    }
+
+    function defaultState(){
+      return {
+        logs: defaultLogs(),
+        notes: "",
+        raceChecklist: { race1:false, race2:false, race3:false, race4:false, race5:false, race6:false },
+        updatedAt: new Date().toISOString()
+      };
+    }
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return defaultState();
+        const parsed = JSON.parse(raw);
+        const base = defaultState();
+        return {
+          ...base,
+          ...parsed,
+          logs: { ...base.logs, ...(parsed.logs || {}) },
+          raceChecklist: { ...base.raceChecklist, ...(parsed.raceChecklist || {}) }
+        };
+      }catch(err){
+        return defaultState();
+      }
+    }
+
+    let state = loadState();
+    let currentSessionId = null;
+
+    function saveState(showToast = true, msg = "Guardado."){
+      state.updatedAt = new Date().toISOString();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderSummary();
+      renderHistory();
+      if(showToast) toast(msg);
+    }
+
+    function toast(message){
+      const el = document.getElementById("toast");
+      el.textContent = message;
+      el.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 1800);
+    }
+
+    function getAllSessions(){
+      return plan.flatMap(w => w.sessions.map(s => ({...s, week:w.week, dates:w.dates})));
+    }
+
+    function renderWeeks(){
+      const host = document.getElementById("weeks");
+      host.innerHTML = "";
+
+      plan.forEach(week => {
+        const done = week.sessions.filter(s => state.logs[s.id]?.completed).length;
+        const pct = Math.round((done / week.sessions.length) * 100);
+
+        const section = document.createElement("section");
+        section.className = "week";
+        section.innerHTML = `
+          <div class="week-head">
+            <div>
+              <div class="week-title">Semana ${week.week}</div>
+              <div class="week-dates">${week.dates}</div>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-text">${done}/3 treinos concluídos</div>
+              <div class="progress"><div style="width:${pct}%"></div></div>
+            </div>
+          </div>
+
+          <div class="sessions">
+            ${week.sessions.map(s => {
+              const log = state.logs[s.id] || {};
+              return `
+                <article class="session">
+                  <div class="tag ${tagClass(s.type)}">${tagLabel(s.type)}</div>
+                  <div class="day">${s.day}</div>
+                  <div class="desc">${s.desc}</div>
+                  <div class="meta">${s.meta}</div>
+
+                  <div class="session-actions">
+                    <label class="done">
+                      <input type="checkbox" data-check="${s.id}" ${log.completed ? "checked" : ""}>
+                      <span>Treino concluído</span>
+                    </label>
+                    <button class="detail-btn" data-detail="${s.id}" type="button">Detalhes</button>
+                  </div>
+                </article>
+              `;
+            }).join("")}
+          </div>
+
+          <div class="focus"><strong>Foco da semana</strong>${week.focus}</div>
+        `;
+        host.appendChild(section);
+      });
+
+      host.querySelectorAll("[data-check]").forEach(el => {
+        el.addEventListener("change", e => {
+          const id = e.target.dataset.check;
+          const existing = state.logs[id] || {};
+          state.logs[id] = {
+            ...existing,
+            completed: e.target.checked,
+            date: e.target.checked && !existing.date ? todayISO() : (existing.date || "")
+          };
+          saveState(false);
+          renderWeeks();
+          toast(e.target.checked ? "Treino marcado como feito." : "Treino desmarcado.");
+        });
+      });
+
+      host.querySelectorAll("[data-detail]").forEach(btn => {
+        btn.addEventListener("click", () => openDetail(btn.dataset.detail));
+      });
+    }
+
+    function renderSummary(){
+      const sessions = getAllSessions();
+      const total = sessions.length;
+      const done = sessions.filter(s => state.logs[s.id]?.completed).length;
+      const left = total - done;
+      const fullWeeks = plan.filter(w => w.sessions.every(s => state.logs[s.id]?.completed)).length;
+      const pct = Math.round((done / total) * 100);
+
+      const pairs = [
+        ["doneCount", done], ["leftCount", left], ["weekCount", fullWeeks], ["pctCount", pct + "%"],
+        ["doneCountM", done], ["leftCountM", left], ["weekCountM", fullWeeks], ["pctCountM", pct + "%"]
+      ];
+      pairs.forEach(([id, value]) => {
+        const el = document.getElementById(id);
+        if(el) el.textContent = value;
+      });
+      document.getElementById("overallProgressText").textContent = `${done} de ${total} treinos concluídos`;
+    }
+
+    function bindStaticPanels(){
+      const globalNotes = document.getElementById("globalNotes");
+      globalNotes.value = state.notes || "";
+      globalNotes.addEventListener("input", () => {
+        state.notes = globalNotes.value;
+        saveState(false);
+      });
+
+      document.querySelectorAll("[data-race]").forEach(el => {
+        const key = el.dataset.race;
+        el.checked = !!state.raceChecklist[key];
+        el.addEventListener("change", () => {
+          state.raceChecklist[key] = el.checked;
+          saveState(false);
+        });
+      });
+    }
+
+    function findSession(id){
+      return getAllSessions().find(s => s.id === id);
+    }
+
+    function openDetail(id){
+      currentSessionId = id;
+      const s = findSession(id);
+      const log = state.logs[id] || {};
+      document.getElementById("dialogTitle").textContent = `${s.day} • ${tagLabel(s.type)}`;
+      document.getElementById("dialogSubtitle").textContent = `${s.desc} • ${s.meta}`;
+      document.getElementById("logDate").value = log.date || "";
+      document.getElementById("logTime").value = log.time || "";
+      document.getElementById("logDistance").value = log.distance || "";
+      document.getElementById("logFeeling").value = log.feeling || "";
+      document.getElementById("logNotes").value = log.notes || "";
+      document.getElementById("detailDialog").showModal();
+    }
+
+    function closeDetail(){
+      document.getElementById("detailDialog").close();
+      currentSessionId = null;
+    }
+
+    function saveDetail(){
+      if(!currentSessionId) return;
+      const existing = state.logs[currentSessionId] || {};
+      state.logs[currentSessionId] = {
+        ...existing,
+        completed: true,
+        date: document.getElementById("logDate").value || existing.date || todayISO(),
+        time: document.getElementById("logTime").value,
+        distance: document.getElementById("logDistance").value,
+        feeling: document.getElementById("logFeeling").value,
+        notes: document.getElementById("logNotes").value.trim()
+      };
+      saveState(false);
+      renderWeeks();
+      closeDetail();
+      toast("Detalhes do treino guardados.");
+    }
+
+    function renderHistory(){
+      const host = document.getElementById("historyList");
+      const sessions = getAllSessions()
+        .map(s => ({...s, log: state.logs[s.id] || {}}))
+        .filter(x => x.log.completed)
+        .sort((a,b) => {
+          const da = a.log.date || "";
+          const db = b.log.date || "";
+          return db.localeCompare(da);
+        });
+
+      if(!sessions.length){
+        host.innerHTML = `<div class="history-item">
+          <strong>Ainda não há treinos registados.</strong>
+          <div style="color:var(--muted); margin-top:6px;">Quando o Adílio concluir um treino, ele aparece aqui com os detalhes.</div>
+        </div>`;
+        return;
+      }
+
+      host.innerHTML = sessions.map(item => {
+        const parts = [];
+        if(item.log.time) parts.push(`⏱ ${item.log.time} min`);
+        if(item.log.distance) parts.push(`📏 ${item.log.distance} km`);
+        if(item.log.feeling) parts.push(`💬 ${item.log.feeling}`);
+        return `
+          <div class="history-item">
+            <div class="history-top">
+              <div>
+                <strong>${item.day} • ${tagLabel(item.type)}</strong>
+                <span>Semana ${item.week} • ${item.dates}${item.log.date ? ` • ${formatDate(item.log.date)}` : ""}</span>
+              </div>
+            </div>
+
+            <div class="history-badges">
+              ${parts.map(p => `<div class="mini-badge">${p}</div>`).join("") || `<div class="mini-badge">✅ concluído</div>`}
+            </div>
+
+            ${item.log.notes ? `<div class="history-note">${escapeHtml(item.log.notes)}</div>` : ""}
+            <div class="history-actions">
+              <button class="secondary" type="button" onclick="openDetail('${item.id}')">Editar</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function formatDate(value){
+      if(!value) return "";
+      const [y,m,d] = value.split("-");
+      return `${d}/${m}/${y}`;
+    }
+
+    function exportJSON(){
+      const payload = {
+        app: "Missão 8K — Adílio",
+        version: 2,
+        exportedAt: new Date().toISOString(),
+        state
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `missao_8k_adilio_v2_${todayISO()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      toast("JSON exportado.");
+    }
+
+    function importJSON(file){
+      const reader = new FileReader();
+      reader.onload = () => {
+        try{
+          const parsed = JSON.parse(reader.result);
+          const incoming = parsed.state ? parsed.state : parsed;
+          const base = defaultState();
+          state = {
+            ...base,
+            ...incoming,
+            logs: { ...base.logs, ...(incoming.logs || {}) },
+            raceChecklist: { ...base.raceChecklist, ...(incoming.raceChecklist || {}) }
+          };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          bindStaticPanels();
+          renderWeeks();
+          renderSummary();
+          renderHistory();
+          toast("Registos importados com sucesso.");
+        }catch(err){
+          alert("Não foi possível importar este JSON.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function copySummary(simple = true){
+      const sessions = getAllSessions();
+      const total = sessions.length;
+      const done = sessions.filter(s => state.logs[s.id]?.completed).length;
+      const fullWeeks = plan.filter(w => w.sessions.every(s => state.logs[s.id]?.completed)).length;
+      const pct = Math.round((done / total) * 100);
+      const lastUpdate = state.updatedAt ? new Date(state.updatedAt).toLocaleString("pt-PT") : "sem registo";
+
+      let text = `Missão 8K — Adílio
+Progresso: ${done}/${total} treinos (${pct}%)
+Semanas completas: ${fullWeeks}/${plan.length}
+Última atualização: ${lastUpdate}`;
+
+      if(!simple){
+        const recent = sessions
+          .map(s => ({...s, log: state.logs[s.id] || {}}))
+          .filter(x => x.log.completed)
+          .sort((a,b) => (b.log.date || "").localeCompare(a.log.date || ""))
+          .slice(0,3);
+
+        if(recent.length){
+          text += `
+
+Últimos treinos:`;
+          recent.forEach(r => {
+            const bits = [];
+            if(r.log.date) bits.push(formatDate(r.log.date));
+            if(r.log.time) bits.push(`${r.log.time} min`);
+            if(r.log.distance) bits.push(`${r.log.distance} km`);
+            if(r.log.feeling) bits.push(r.log.feeling);
+            text += `\n- ${r.day} (${r.type})${bits.length ? " • " + bits.join(" • ") : ""}`;
+          });
+        }
+
+        text += `
+
+Notas gerais: ${state.notes ? state.notes.trim() : "sem notas"}`;
+      }
+
+      navigator.clipboard.writeText(text).then(() => {
+        toast(simple ? "Resumo copiado." : "Atualização detalhada copiada.");
+      });
+    }
+
+    function resetAll(){
+      if(!confirm("Tens a certeza que queres limpar todos os registos?")) return;
+      state = defaultState();
+      localStorage.removeItem(STORAGE_KEY);
+      bindStaticPanels();
+      renderWeeks();
+      renderSummary();
+      renderHistory();
+      toast("Registos limpos.");
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function updateCountdown(){
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      let race = new Date(`${currentYear}-10-11T09:20:00`);
+      if(now > race) race = new Date(`${currentYear + 1}-10-11T09:20:00`);
+      document.getElementById("raceDateText").textContent = `11 de outubro de ${race.getFullYear()} • 09:20 • EDP 8K`;
+
+      const diff = Math.max(0, Math.floor((race - now) / 1000));
+      const days = Math.floor(diff / 86400);
+      const hours = Math.floor((diff % 86400) / 3600);
+      const mins = Math.floor((diff % 3600) / 60);
+      const secs = diff % 60;
+
+      document.getElementById("d").textContent = days;
+      document.getElementById("h").textContent = String(hours).padStart(2,"0");
+      document.getElementById("m").textContent = String(mins).padStart(2,"0");
+      document.getElementById("s").textContent = String(secs).padStart(2,"0");
+    }
+
+    document.getElementById("exportBtn").addEventListener("click", exportJSON);
+    document.getElementById("importFile").addEventListener("change", e => {
+      if(e.target.files?.[0]) importJSON(e.target.files[0]);
+      e.target.value = "";
+    });
+    document.getElementById("copySummaryBtn").addEventListener("click", () => copySummary(true));
+    document.getElementById("copyDetailedBtn").addEventListener("click", () => copySummary(false));
+    document.getElementById("printBtn").addEventListener("click", () => window.print());
+    document.getElementById("resetBtn").addEventListener("click", resetAll);
+    document.getElementById("saveLogBtn").addEventListener("click", saveDetail);
+    document.getElementById("closeDialogBtn").addEventListener("click", closeDetail);
+
+    bindStaticPanels();
+    renderWeeks();
+    renderSummary();
+    renderHistory();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    window.openDetail = openDetail;
+  </script>
+</body>
+</html>
